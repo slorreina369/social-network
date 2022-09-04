@@ -68,3 +68,4 @@ const thoughtController = {
 };
 
 module.exports = thoughtController;
+//there are so many jokes here that can be made. please be happy I made none
