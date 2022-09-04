@@ -1,14 +1,6 @@
-const { Schema, model} = require ('mongoose');
-
-const UserSchema = new Schema(
-    //email, thoughts, friends
-    {
-     username:{
-        //string, unique, required, trimmed
-        type:String,
-        unique:true,
-        required:true,
-        trim: true
-     }   
-    }
-)
+const User = require('./User');
+/**
+ const Thought
+ const Reaction (SCHEMA ONLY)
+ */
+module.exports= { User };

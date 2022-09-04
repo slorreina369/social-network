@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/slorreina369/social-network#readme",
   "dependencies": {
-    "mongoose": "^6.5.4"
+    "mongoose": "^6.5.4",
+    "validator": "^13.7.0"
   }
 }
