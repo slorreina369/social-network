@@ -9,7 +9,7 @@ const userController = {
             res.status(400).json(err);
         });
     },
-    getUserbyId({params},res){
+    getUserById({params},res){
         User.findOne({_id:params.id})
         .then(dbUserData =>{
             if(dbUserData){
