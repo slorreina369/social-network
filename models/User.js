@@ -25,6 +25,7 @@ const UserSchema = new Schema(
      }
       */ 
     }
+    //JSON Probabbly
 )
 
 //create a virtual friendCount that retrieves the length of the user's friends
