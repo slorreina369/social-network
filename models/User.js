@@ -15,15 +15,19 @@ const UserSchema = new Schema(
         unique:true,
         required:true,
         validate: [isEmail, 'invalid email']
-     }
-     /*
-     thoughts:{
-        _id:reference future Thoughts model
      },
-     friends:{
-        _id:reference future User model
-     }
-      */ 
+    thoughts:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:'Thought'
+        }
+     ],
+    friends:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:'User'
+        }
+    ]
     },
     {    
         toJSON:{
