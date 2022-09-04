@@ -12,7 +12,7 @@ const userController = {
     getUserById({params},res){
         User.findOne({_id:params.id})
         .then(dbUserData =>{
-            if(dbUserData){
+            if(!dbUserData){
                 res.json(404).json({message:'No user found with this id'});
                 return;
             }
