@@ -1,6 +1,28 @@
 const {User, Thought} = require('../models');
 
 const thoughtController = {
+    getAllThoughts(req,res){
+        Thought.find({})
+        .then(dbThoughtData => res.json(dbThoughtData))
+        .catch(err =>{
+            console.log(err);
+            res.status(400).json(err);
+        })
+    },
+    getThoughtById({params}, res){
+        Thought.findOne({_id:params.thoughtId})
+        .then(dbThoughtData =>{
+            if(!dbThoughtData){
+                res.json(404).json({message:'No thought found with this id'});
+                return;
+            }
+            res.json(dbThoughtData);
+        })
+        .catch(err =>{
+            console.log(err);
+            res.status(400).json(err);
+        })
+    },
     addThoughts({params, body}, res){
         console.log(params);
         Thought.create(body)
@@ -23,15 +45,16 @@ const thoughtController = {
     addReaction({params, body}, res){
         Thought.findOneAndUpdate(
             {_id:params.thoughtId},
-            {$push:{reples:body}},
+            {$push:{reaction:body}},
             {new:true, runValidators:true}
         )
-        .then(dbUserData =>{
-            if(!dbUserData){
-                res.status(404).json({message:'No user found with this id'});
+        .then(dbThoughtData =>{
+            console.log('body')
+            if(!dbThoughtData){
+                res.status(404).json({message:'No thought found with this id'});
                 return;
             }
-            res.json(dbUserData);
+            res.json(dbThoughtData);
         })
         .catch(err => res.json(err));
     },
@@ -48,21 +71,17 @@ const thoughtController = {
             )
             .then(dbUserData => {
                 if(!dbUserData){
-                    console.log("there is no funny joke for user not found");
                     res.status(404).json({message:'No User found with this id!'});
                     return;
                 }
-                console.log('user found');
                 res.json(dbUserData);
             })
             .catch(err => {
-                console.log(err, 'well thats funny');
                 res.status(501).json(err);
             })
         })
 
         .catch(err => {
-            console.log('some string', err);
             res.status(500).json(err)
         })
     },
