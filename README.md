@@ -22,7 +22,7 @@ Run server with `npm start`
 
 # Castify
 
-![walkthrough](./Social-Network.mp4)
+https://user-images.githubusercontent.com/99361951/189054213-89628377-f4fb-40b4-b587-7c8bcd301650.mp4
 
 ## Contributing 
 
