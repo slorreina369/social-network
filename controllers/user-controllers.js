@@ -87,7 +87,43 @@ const userController = {
         })
         .catch(err => res.status(500).json(err));
     },
-    removeFriend(){}
+    removeFriend({params}, res){
+        Promise.all([
+            User.findById(
+                {_id:params.id}
+            ),
+            User.findById(
+                {_id:params.friendId}
+            )
+        ])
+        .then(dbUsersData =>{
+            if(!dbUsersData.every(user=>user)){
+                res.status(404).json({message:'No User found with this id'});
+                return;
+            }
+            return Promise.all([
+                User.findByIdAndUpdate(
+                    {_id:params.id},
+                    {$pull:{friends:params.friendId}},
+                    {new:true}
+                ),
+                User.findByIdAndUpdate(
+                    {_id:params.friendId},
+                    {$pull:{friends:params.id}},
+                    {new:true}
+                )
+            ])
+        })
+        .then(([firstUser]) =>{
+            res.json(firstUser);
+        })
+        .catch(err => 
+            {
+                console.log(err);
+                res.status(500).json(err);
+            }
+        )
+    }
 }
 
 module.exports = userController;
