@@ -74,7 +74,7 @@ const thoughtController = {
         .catch(err => res.json(err));
     },
     removeThought({params, body}, res){
-        Thought.findOneAndDelete({_id:params.thoughtId})
+        Thought.findByIdAndDelete({_id:params.thoughtId})
         .then(deletedThought =>{
             if(!deletedThought){
                 return res.status(404).json({message:'No thought found with this id'});
@@ -95,15 +95,14 @@ const thoughtController = {
                 res.status(501).json(err);
             })
         })
-
         .catch(err => {
             res.status(500).json(err)
         })
     },
     removeReaction({params}, res){
-        Thought.findOneAndDelete(
+        Thought.findByIdAndUpdate(
             {_id:params.thoughtId},
-            {$pull:{replies:{commentId:params.commentId}}},
+            {$pull:{reaction:{_id:params.reactionId}}},
             {new:true}
         )
         .then(dbUserData => res.json(dbUserData))
